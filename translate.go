@@ -1,15 +1,10 @@
-package main
+package translate
 
 import (
 	"crypto/tls"
-	"encoding/json"
-	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
-	"os"
 )
 
 type Response struct {
@@ -22,42 +17,7 @@ type Translation struct {
 	DetectedSourceLanguage string
 }
 
-func main() {
-
-	//get key from file
-	key, err := os.ReadFile("key.txt")
-	if err != nil {
-		log.Panic(err)
-	}
-	//set variables
-	var (
-		target = flag.String("t", "fr", "Target language (two-letter code)")
-		q      = flag.String("p", "cheese", "Word or phrase to translate")
-		source = flag.String("s", "en", "Source language")
-		model  = "nmt"
-		format = "text"
-	)
-	flag.Parse()
-
-	urlVals := make(url.Values)
-	urlVals.Set("key", string(key))
-	urlVals.Set("target", *target)
-	urlVals.Set("format", format)
-	urlVals.Set("q", *q)
-	urlVals.Set("source", *source)
-	urlVals.Set("model", model)
-
-	var response Response
-	body := GetBody("https://translation.googleapis.com/language/translate/v2?" + urlVals.Encode())
-
-	json.Unmarshal(body, &response)
-	fmt.Println("Word to translate:", *q)
-	fmt.Println("Detected Language:", returnLang(*source))
-	fmt.Println("In ", returnLang(*target), ":", response.Data.Translations[0].TranslatedText)
-
-}
-
-func returnLang(lang string) string {
+func ReturnLang(lang string) string {
 	switch lang {
 	case "af":
 		return "Afrikaans"
