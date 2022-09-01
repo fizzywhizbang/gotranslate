@@ -20,9 +20,9 @@ func main() {
 	}
 	//set variables
 	var (
-		target = flag.String("t", "fr", "Target language (two-letter code)")
-		q      = flag.String("p", "cheese", "Word or phrase to translate")
-		source = flag.String("s", "en", "Source language")
+		target = flag.String("target", "fr", "Target language (two-letter code)")
+		phrase = flag.String("phrase", "cheese", "Word or phrase to translate")
+		source = flag.String("source", "en", "Source language")
 		model  = "nmt"
 		format = "text"
 	)
@@ -32,7 +32,7 @@ func main() {
 	urlVals.Set("key", string(key))
 	urlVals.Set("target", *target)
 	urlVals.Set("format", format)
-	urlVals.Set("q", *q)
+	urlVals.Set("q", *phrase)
 	urlVals.Set("source", *source)
 	urlVals.Set("model", model)
 
@@ -40,7 +40,10 @@ func main() {
 	body := trans.GetBody("https://translation.googleapis.com/language/translate/v2?" + urlVals.Encode())
 
 	json.Unmarshal(body, &response)
-	fmt.Println("Word to translate:", *q)
+	//begin output
+
+	fmt.Println("Word to translate:", *phrase)
+
 	fmt.Println("Detected Language:", trans.ReturnLang(*source))
 	fmt.Println("In ", trans.ReturnLang(*target), ":", response.Data.Translations[0].TranslatedText)
 
