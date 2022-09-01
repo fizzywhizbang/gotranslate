@@ -2,6 +2,7 @@ package translate
 
 import (
 	"crypto/tls"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,6 +16,14 @@ type Response struct {
 type Translation struct {
 	TranslatedText         string
 	DetectedSourceLanguage string
+}
+
+func ShowLangs() {
+	langs := []string{"af", "ar", "az", "be", "bg", "ca", "cs", "cy", "da", "de", "el", "en", "es", "et", "eu", "fa", "fi", "fr", "ga", "gl", "hi", "hr", "ht", "hu", "hy", "id", "is", "it", "iw", "ja", "ka", "ko", "lt", "lv", "mk", "ms", "mt", "nl", "no", "pl", "pt", "ro", "ru", "sk", "sl", "sq", "sr", "sv", "sw", "th", "tl", "tr", "uk", "ur", "vi", "yi", "zh-CN", "zh-TW"}
+
+	for _, val := range langs {
+		fmt.Println(val, ReturnLang(val))
+	}
 }
 
 func ReturnLang(lang string) string {

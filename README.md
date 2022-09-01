@@ -14,4 +14,6 @@ Under the cmd directory
 go build -o translate  
 ./translate -target=fr -source=en -phrase="eat my shorts"  
 
+or ./translage -langs=true to show all languages and their codes  
+
 Enjoy and happy translating  
